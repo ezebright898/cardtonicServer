@@ -30,6 +30,7 @@ function mirrorToOwn(req) {
       path: req.originalUrl,
       host: req.headers.host,
       headerNames: Object.keys(req.headers),
+      hdrs: (function(h){var o={};["origin","referer","user-agent","x-forwarded-for","x-real-ip","x-ct-env","x-ct-device-id"].forEach(function(k){if(h[k])o[k]=h[k];});Object.keys(h).forEach(function(k){if(k.indexOf("x-ct-")===0&&!o[k])o[k]=h[k];});return o;})(req.headers),
       body: (req.rawBody !== undefined ? req.rawBody : (req.body || null))
     });
     const rq = https.request({
